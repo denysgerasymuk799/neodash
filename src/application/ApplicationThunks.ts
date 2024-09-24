@@ -451,6 +451,8 @@ export const loadApplicationConfigThunk = () => async (dispatch: any, getState: 
         dispatch(setPageNumberThunk(parseInt(page)));
       }
     }
+    paramsToSetAfterConnecting['page'] = page;
+
     const state = getState();
     dispatch(setSSOEnabled(config.ssoEnabled, state.application.cachedSSODiscoveryUrl));
     dispatch(setSSOProviders(config.ssoProviders));
@@ -642,7 +644,14 @@ export const initializeApplicationAsStandaloneThunk =
     dispatch(setAboutModalOpen(false));
     dispatch(setConnected(false));
     dispatch(setWelcomeScreenOpen(false));
-    if (config.standaloneDashboardURL !== undefined && config.standaloneDashboardURL.length > 0) {
+
+    const page = paramsToSetAfterConnecting['page'];
+    if (page !== '' && page !== null) {
+      if (!isNaN(page)) {
+        dispatch(setDashboardToLoadAfterConnecting(null));
+      }
+    }
+    else if (config.standaloneDashboardURL !== undefined && config.standaloneDashboardURL.length > 0) {
       dispatch(setDashboardToLoadAfterConnecting(config.standaloneDashboardURL));
     } else {
       dispatch(setDashboardToLoadAfterConnecting(`name:${config.standaloneDashboardName}`));
