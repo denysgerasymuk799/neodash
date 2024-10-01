@@ -19,7 +19,7 @@ server {
     listen 443 ssl;
     server_name SeedBatchLifecycle.smartmart.syngentaaws.org;
 
-    ssl_certificate /etc/nginx/ssl/smartmart.syngentaaws.org-bundle.crt;
+    ssl_certificate /etc/nginx/ssl/smartmart.syngentaaws.org.cer;
     ssl_certificate_key /etc/nginx/ssl/smartmart.syngentaaws.org.key;
 
     location / {
